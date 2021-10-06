@@ -1,17 +1,24 @@
 import java.util.LinkedList;
 
 public class Departments {
-    String title;
+    String depTitle;
     int counter;
 
     LinkedList<Departments> departments = new LinkedList<Departments>();
     LinkedList<Employee> employees = new LinkedList<Employee>();
+
+    Departments(){ }
+
+    Departments(String title,int counter){
+        this.depTitle=title;
+        this.counter=counter;
+    }
  
-    public void addCounter(Employee object){
+    public void update(Employee object){
         boolean found=false;
         for (int i=0; i<departments.size();i++)
         {
-            if (object.title==departments.get(i).title){
+            if (object.title==departments.get(i).depTitle){
                 departments.get(i).counter++;
                 found=true;
             }
@@ -24,30 +31,36 @@ public class Departments {
     }
 
     public void display(){
-        for (int i=0; i<departments.size();i++)
-        {
-            if (departments.get(i).counter>1){
-                System.out.println("Regular Title: " + departments.get(i).title);
-            }
-            else {
-                System.out.println("Special Title: "+ departments.get(i).title);
-            }
-
-            for(int j=0; j<employees.size();j++){
-                if (employees.get(j).title==departments.get(i).title){
-                    System.out.println("Name: "+employees.get(j).name);
-                    System.out.println("Mobile: "+employees.get(j).mobile);
+        for (Departments eachDepartment : departments) {
+            {
+                //lambda to get special/regular title based on departement count
+                SpecialTitle sp;
+                sp=eachDepartment.getTitle();            
+                System.out.println(sp.check(eachDepartment)+eachDepartment.depTitle);
+    
+                for (Employee eachEmployee : employees) {
+                    if (eachEmployee.title==eachDepartment.depTitle){
+                        System.out.println("Name: "+eachEmployee.name);
+                        System.out.println("Mobile: "+eachEmployee.mobile);
+                    }
                 }
+                System.out.println();
             }
-            System.out.println();
-        }  
+        }      
     }
 
-    Departments(String title,int counter){
-        this.title=title;
-        this.counter=counter;
+    public SpecialTitle getTitle() {
+        return (Departments dep) -> {
+            if (dep.counter>1) { return "Regular Title: "; }
+            return "Special Title: ";
+        };
+    }
+    interface SpecialTitle {
+        String check(Departments emp);
     }
 
-    Departments(){ }
+    public static String checkTitle(SpecialTitle sp, Departments dp) {
+        return sp.check(dp);
+    }
 
 }

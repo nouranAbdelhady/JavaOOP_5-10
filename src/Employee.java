@@ -11,10 +11,6 @@ public class Employee {
        this.mobile=mobile;
     }
 
-    public String getTitle(){
-        return this.title;
-    }
-
     public void getDetails(){
         System.out.println("Name: "+this.name);
         System.out.println("Mobile: "+this.mobile);

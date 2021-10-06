@@ -1,15 +1,23 @@
+import java.util.List;
+import java.util.Arrays;
+
 public class App {
     public static void main(String[] args) throws Exception {
         
-        Employee emp1 = new Employee("SE", "Nouran", 012);
-        Employee emp2 = new Employee("SE", "Sam", 013);
-        Employee emp3 = new Employee("HR", "Nancy", 01);
-
+        List<Employee> employees = Arrays.asList(
+            new Employee("SE", "Nouran", 1236), 
+            new Employee("ASE", "Zeina", 9876),
+            new Employee("SE", "Sam", 13897),
+            new Employee("HR", "Zeyad", 9523),
+            new Employee("ASE", "Farah", 8532),
+            new Employee("ASE", "Amr", 98563)
+        );
+          
         Departments depObj = new Departments();
-        depObj.addCounter(emp1);
-        depObj.addCounter(emp2);
-        depObj.addCounter(emp3);
-
+        for (Employee employee : employees) {
+            depObj.update(employee);
+        }
+        
         depObj.display();
 
     }
